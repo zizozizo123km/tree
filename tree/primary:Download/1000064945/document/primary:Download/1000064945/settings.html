@@ -1,0 +1,429 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات والخصوصية | فيسبوك</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --fb-blue: #1877F2;
+            --fb-bg: #F0F2F5;
+            --fb-white: #FFFFFF;
+            --fb-text-main: #050505;
+            --fb-text-secondary: #65676B;
+            --fb-hover: #E4E6EB;
+            --fb-border: #CED0D4;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--fb-bg);
+            color: var(--fb-text-main);
+            overflow-x: hidden;
+        }
+
+        .fb-shadow {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-sidebar {
+            height: calc(100vh - 56px);
+            position: sticky;
+            top: 56px;
+        }
+
+        .nav-item-active {
+            background-color: #E7F3FF;
+            color: var(--fb-blue);
+        }
+
+        .nav-item-active i {
+            color: var(--fb-blue);
+        }
+
+        .setting-card {
+            background: var(--fb-white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #E4E6EB;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .btn-edit {
+            color: var(--fb-blue);
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-edit:hover {
+            text-decoration: underline;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bcbcbc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--fb-blue); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        @media (max-width: 768px) {
+            .settings-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full h-14 bg-white fb-shadow z-50 flex items-center justify-between px-4">
+        <!-- Left Section: Logo & Search -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <a href="index.html">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Logo" class="w-10 h-10">
+            </a>
+            <div class="relative hidden md:block">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-gray-500"></i>
+                <input type="text" placeholder="البحث في فيسبوك" class="bg-gray-100 rounded-full py-2 pr-10 pl-4 focus:outline-none w-64">
+            </div>
+        </div>
+
+        <!-- Center Section: Icons -->
+        <div class="hidden lg:flex items-center space-x-1 space-x-reverse h-full">
+            <a href="index.html" class="px-10 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition"><i class="fa-solid fa-house text-gray-600 text-xl"></i></a>
+            <a href="friends.html" class="px-10 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition"><i class="fa-solid fa-user-group text-gray-600 text-xl"></i></a>
+            <a href="marketplace.html" class="px-10 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition"><i class="fa-solid fa-store text-gray-600 text-xl"></i></a>
+            <a href="groups.html" class="px-10 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition"><i class="fa-solid fa-users text-gray-600 text-xl"></i></a>
+        </div>
+
+        <!-- Right Section: Actions -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition relative">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <a href="messages.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition relative">
+                <i class="fa-brands fa-facebook-messenger"></i>
+            </a>
+            <a href="notifications.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition relative">
+                <i class="fa-solid fa-bell"></i>
+            </a>
+            <a href="profile.html">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100" alt="Profile" class="w-10 h-10 rounded-full border border-gray-200 object-cover">
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-14 flex">
+        <!-- Sidebar Navigation -->
+        <aside class="settings-sidebar w-80 bg-white border-l border-gray-200 overflow-y-auto hidden md:block">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold mb-4">الإعدادات</h1>
+                
+                <nav class="space-y-1">
+                    <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg nav-item-active transition">
+                        <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <span class="font-semibold">إعدادات الحساب العامة</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-gray-100 transition text-gray-700">
+                        <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span class="font-semibold">الأمان وتسجيل الدخول</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-gray-100 transition text-gray-700">
+                        <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <span class="font-semibold">الخصوصية</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-gray-100 transition text-gray-700">
+                        <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <span class="font-semibold">الإعلانات</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-gray-100 transition text-gray-700">
+                        <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+                        <span class="font-semibold">المدفوعات</span>
+                    </a>
+                    <hr class="my-2 border-gray-200">
+                    <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-gray-100 transition text-gray-700">
+                        <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-moon"></i>
+                        </div>
+                        <span class="font-semibold">الوضع المظلم</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <section class="flex-1 max-w-4xl mx-auto p-6">
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-4">إعدادات الحساب العامة</h2>
+                
+                <div class="setting-card fb-shadow">
+                    <!-- Name Setting -->
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">الاسم</span>
+                            <span class="text-gray-500">أحمد محمد عبد الله</span>
+                        </div>
+                        <span class="btn-edit" onclick="toggleEdit('name')">تعديل</span>
+                    </div>
+
+                    <!-- Username Setting -->
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">اسم المستخدم</span>
+                            <span class="text-gray-500">facebook.com/ahmed.mohamed.dev</span>
+                        </div>
+                        <span class="btn-edit" onclick="toggleEdit('username')">تعديل</span>
+                    </div>
+
+                    <!-- Email Setting -->
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">جهة الاتصال</span>
+                            <span class="text-gray-500">ahmed.dev@example.com</span>
+                        </div>
+                        <span class="btn-edit" onclick="toggleEdit('email')">تعديل</span>
+                    </div>
+
+                    <!-- Identity Setting -->
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">تأكيد الهوية</span>
+                            <span class="text-gray-500 text-sm">قم بتأكيد هويتك لزيادة أمان حسابك.</span>
+                        </div>
+                        <span class="btn-edit">عرض</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-4">الأمان وتسجيل الدخول</h2>
+                <div class="setting-card fb-shadow">
+                    <div class="flex items-start space-x-4 space-x-reverse mb-6">
+                        <div class="p-3 bg-yellow-100 rounded-lg">
+                            <i class="fa-solid fa-key text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">تغيير كلمة السر</h3>
+                            <p class="text-sm text-gray-500">يُنصح باستخدام كلمة سر قوية لا تستخدمها في أي مكان آخر.</p>
+                            <button class="mt-2 bg-gray-200 hover:bg-gray-300 text-black px-4 py-1.5 rounded-md font-semibold transition">تحديث كلمة السر</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 space-x-reverse">
+                        <div class="p-3 bg-blue-100 rounded-lg">
+                            <i class="fa-solid fa-mobile-screen-button text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">المصادقة الثنائية</h3>
+                            <p class="text-sm text-gray-500">سنطلب رمزاً إذا لاحظنا محاولة تسجيل دخول من جهاز أو متصفح غير معروف.</p>
+                            <button class="mt-2 bg-gray-200 hover:bg-gray-300 text-black px-4 py-1.5 rounded-md font-semibold transition">استخدام المصادقة الثنائية</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-4">التفضيلات</h2>
+                <div class="setting-card fb-shadow">
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">الوضع المظلم</span>
+                            <span class="text-gray-500 text-sm">اضبط مظهر فيسبوك لتقليل الوهج وإراحة عينيك.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">إشعارات البريد الإلكتروني</span>
+                            <span class="text-gray-500 text-sm">تلقي تحديثات الحساب عبر البريد.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">اللغة والمنطقة</span>
+                            <span class="text-gray-500 text-sm">العربية (مصر)</span>
+                        </div>
+                        <span class="btn-edit">تعديل</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-4 text-red-600">منطقة الخطر</h2>
+                <div class="setting-card fb-shadow border-t-4 border-red-500">
+                    <div class="setting-row">
+                        <div>
+                            <span class="block font-bold">إلغاء تنشيط الحساب وحذفه</span>
+                            <span class="text-gray-500 text-sm">يمكنك إيقاف حسابك مؤقتًا أو حذفه نهائيًا.</span>
+                        </div>
+                        <button class="text-red-600 font-bold hover:underline">إدارة</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- UI Overlay for Modals (Mockup) -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center">
+        <div class="bg-white w-full max-w-md rounded-lg shadow-2xl p-6 relative">
+            <button onclick="closeModal()" class="absolute left-4 top-4 text-gray-500 hover:text-black">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h2 id="modalTitle" class="text-xl font-bold mb-4 border-b pb-4">تعديل الإعدادات</h2>
+            <div id="modalBody" class="py-4">
+                <label class="block text-sm font-semibold mb-2">القيمة الجديدة</label>
+                <input type="text" id="modalInput" class="w-full border rounded-lg p-3 focus:border-blue-500 outline-none">
+            </div>
+            <div class="flex justify-end space-x-2 space-x-reverse mt-6">
+                <button onclick="closeModal()" class="px-6 py-2 bg-gray-200 rounded-lg font-semibold">إلغاء</button>
+                <button onclick="saveSettings()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="js/core/app.js"></script>
+    <script src="js/modules/ui-controller.js"></script>
+    <script src="js/utils/api-mock.js"></script>
+
+    <script>
+        // Tab & UI Interaction Logic
+        function toggleEdit(type) {
+            const overlay = document.getElementById('modalOverlay');
+            const title = document.getElementById('modalTitle');
+            const input = document.getElementById('modalInput');
+            
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+
+            switch(type) {
+                case 'name':
+                    title.innerText = 'تعديل الاسم';
+                    input.value = 'أحمد محمد عبد الله';
+                    break;
+                case 'username':
+                    title.innerText = 'تعديل اسم المستخدم';
+                    input.value = 'ahmed.mohamed.dev';
+                    break;
+                case 'email':
+                    title.innerText = 'تعديل البريد الإلكتروني';
+                    input.value = 'ahmed.dev@example.com';
+                    break;
+            }
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        }
+
+        function saveSettings() {
+            // Mock Save Logic
+            alert('تم حفظ التغييرات بنجاح!');
+            closeModal();
+        }
+
+        // Dark Mode Mockup Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', function() {
+            if(this.checked) {
+                document.body.style.filter = "invert(1) hue-rotate(180deg)";
+                // Special handling for images to prevent them from being inverted
+                document.querySelectorAll('img').forEach(img => img.style.filter = "invert(1) hue-rotate(180deg)");
+            } else {
+                document.body.style.filter = "none";
+                document.querySelectorAll('img').forEach(img => img.style.filter = "none");
+            }
+        });
+
+        // Initialize UI components from modules
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Settings module initialized...');
+            if (typeof UIController !== 'undefined') {
+                UIController.initSettings();
+            }
+        });
+    </script>
+</body>
+</html>
+```
