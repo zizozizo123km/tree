@@ -1,0 +1,498 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماركت بليس | فيسبوك</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        :root {
+            --fb-blue: #1877F2;
+            --fb-bg: #F0F2F5;
+            --fb-white: #FFFFFF;
+            --fb-text: #050505;
+            --fb-secondary-text: #65676B;
+            --fb-hover: #E4E6E9;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--fb-bg);
+            color: var(--fb-text);
+            overflow-x: hidden;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bcc0c4;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8adb2;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card-shadow {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-item:hover {
+            background-color: var(--fb-hover);
+        }
+
+        .active-link {
+            background-color: #E7F3FF;
+            color: var(--fb-blue);
+        }
+
+        .active-link i {
+            color: var(--fb-blue);
+        }
+
+        /* Animation for product grid */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .product-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            background: rgba(244, 244, 244, 0.8);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body x-data="{ openCreateModal: false, category: 'الكل' }">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 w-full z-50 glass-header h-14 flex items-center px-4 justify-between">
+        <!-- Right: Logo & Search -->
+        <div class="flex items-center gap-2 flex-1">
+            <a href="index.html">
+                <img src="assets/images/brand/logo.svg" alt="Facebook" class="w-10 h-10" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png'">
+            </a>
+            <div class="relative hidden md:block">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <i data-lucide="search" class="w-5 h-5 text-gray-500"></i>
+                </span>
+                <input type="text" placeholder="البحث في ماركت بليس" class="bg-gray-100 pr-10 pl-4 py-2 rounded-full w-64 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+            </div>
+        </div>
+
+        <!-- Center: Icons -->
+        <nav class="hidden lg:flex items-center gap-2 flex-1 justify-center">
+            <a href="index.html" class="px-8 py-2 hover:bg-gray-100 rounded-lg group transition-all" title="الرئيسية">
+                <i data-lucide="home" class="w-7 h-7 text-gray-600 group-hover:text-blue-600"></i>
+            </a>
+            <a href="marketplace.html" class="px-8 py-2 border-b-4 border-blue-600 rounded-t-lg transition-all" title="ماركت بليس">
+                <i data-lucide="shopping-bag" class="w-7 h-7 text-blue-600"></i>
+            </a>
+            <a href="groups.html" class="px-8 py-2 hover:bg-gray-100 rounded-lg group transition-all" title="المجموعات">
+                <i data-lucide="users" class="w-7 h-7 text-gray-600 group-hover:text-blue-600"></i>
+            </a>
+        </nav>
+
+        <!-- Left: Profile & Actions -->
+        <div class="flex items-center justify-end gap-2 flex-1">
+            <div class="flex gap-2">
+                <a href="messages.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
+                    <i data-lucide="message-circle" class="w-5 h-5 text-black"></i>
+                </a>
+                <a href="notifications.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
+                    <i data-lucide="bell" class="w-5 h-5 text-black"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 rounded-full overflow-hidden border border-gray-200">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100" alt="Profile" class="w-full h-full object-cover">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="pt-14 flex min-h-screen">
+        
+        <!-- Right Sidebar (Fixed) -->
+        <aside class="w-full md:w-80 bg-white fixed right-0 top-14 bottom-0 border-l border-gray-200 overflow-y-auto custom-scrollbar p-4 hidden md:block">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-2xl font-extrabold">Marketplace</h1>
+                <button class="p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Search Mobile/Sidebar -->
+            <div class="relative mb-6">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <i data-lucide="search" class="w-4 h-4 text-gray-500"></i>
+                </span>
+                <input type="text" placeholder="البحث في ماركت بليس" class="bg-gray-100 pr-10 pl-4 py-2 rounded-full w-full focus:outline-none text-sm">
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="space-y-1 mb-6 border-b pb-4">
+                <li>
+                    <a href="#" class="flex items-center gap-3 p-2 rounded-lg active-link font-semibold">
+                        <div class="bg-blue-600 p-2 rounded-full">
+                            <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+                        </div>
+                        تصفح الكل
+                    </a>
+                </li>
+                <li>
+                    <a href="notifications.html" class="flex items-center gap-3 p-2 rounded-lg category-item font-semibold">
+                        <div class="bg-gray-200 p-2 rounded-full">
+                            <i data-lucide="bell" class="w-5 h-5"></i>
+                        </div>
+                        الإشعارات
+                    </a>
+                </li>
+                <li>
+                    <a href="messages.html" class="flex items-center gap-3 p-2 rounded-lg category-item font-semibold">
+                        <div class="bg-gray-200 p-2 rounded-full">
+                            <i data-lucide="inbox" class="w-5 h-5"></i>
+                        </div>
+                        البريد الوارد
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item font-semibold">
+                        <div class="bg-gray-200 p-2 rounded-full">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        حسابك
+                    </a>
+                </li>
+            </ul>
+
+            <button @click="openCreateModal = true" class="w-full bg-blue-50 text-blue-600 font-bold py-2 rounded-lg mb-6 flex items-center justify-center gap-2 hover:bg-blue-100 transition-colors">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                إنشاء قائمة معروضات جديدة
+            </button>
+
+            <!-- Categories -->
+            <div>
+                <h3 class="font-bold text-lg mb-4">الفئات</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item">
+                            <div class="bg-gray-200 p-2 rounded-full text-gray-700">
+                                <i data-lucide="car" class="w-5 h-5"></i>
+                            </div>
+                            <span>مركبات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item">
+                            <div class="bg-gray-200 p-2 rounded-full text-gray-700">
+                                <i data-lucide="home" class="w-5 h-5"></i>
+                            </div>
+                            <span>عقارات للإيجار</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item">
+                            <div class="bg-gray-200 p-2 rounded-full text-gray-700">
+                                <i data-lucide="smartphone" class="w-5 h-5"></i>
+                            </div>
+                            <span>إلكترونيات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item">
+                            <div class="bg-gray-200 p-2 rounded-full text-gray-700">
+                                <i data-lucide="shirt" class="w-5 h-5"></i>
+                            </div>
+                            <span>ملابس وأحذية</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item">
+                            <div class="bg-gray-200 p-2 rounded-full text-gray-700">
+                                <i data-lucide="tv" class="w-5 h-5"></i>
+                            </div>
+                            <span>ترفيه</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 p-2 rounded-lg category-item">
+                            <div class="bg-gray-200 p-2 rounded-full text-gray-700">
+                                <i data-lucide="baby" class="w-5 h-5"></i>
+                            </div>
+                            <span>أسرة</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Product Feed Area -->
+        <section class="flex-1 md:mr-80 p-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Filter Header -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <h2 class="text-xl font-bold">مختارات اليوم</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="text-blue-600 font-semibold cursor-pointer hover:underline text-sm">القاهرة · 40 كم</span>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                    
+                    <!-- Product 1 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 1,200</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">سماعة رأس لاسلكية احترافية - عازلة للضوضاء</p>
+                            <p class="text-gray-500 text-xs mt-1">القاهرة، مصر</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 450</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">ساعة يد ذكية حديثة تدعم اللغة العربية</p>
+                            <p class="text-gray-500 text-xs mt-1">الجيزة، مصر</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 850</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">حذاء رياضي نايك أصلي - مقاس 42</p>
+                            <p class="text-gray-500 text-xs mt-1">الإسكندرية، مصر</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 700</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">حذاء جري مريح جداً - لون أحمر</p>
+                            <p class="text-gray-500 text-xs mt-1">المنصورة، مصر</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 3,200</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">كاميرا بولاريد فورية - حالة ممتازة</p>
+                            <p class="text-gray-500 text-xs mt-1">المعادي، القاهرة</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 6 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1585333120167-0523acc191ad?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 250</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">طقم أدوات مكتبية فاخر للمديرين</p>
+                            <p class="text-gray-500 text-xs mt-1">مدينة نصر، القاهرة</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 7 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 25,000</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">مطبخ كامل خشب زان - تصميم حديث</p>
+                            <p class="text-gray-500 text-xs mt-1">التجمع الخامس، القاهرة</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 8 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 8,500</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">هاتف ذكي أندرويد - كسر زيرو</p>
+                            <p class="text-gray-500 text-xs mt-1">طنطا، مصر</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 9 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 4,000</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">أريكة غرفة معيشة مريحة جداً - لون زيتي</p>
+                            <p class="text-gray-500 text-xs mt-1">الشيخ زايد، الجيزة</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 10 -->
+                    <div class="product-card flex flex-col cursor-pointer bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="aspect-square w-full">
+                            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=500" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-lg">EGP 1,800</p>
+                            <p class="text-gray-800 text-sm line-clamp-2">سماعات بلوتوث من أفضل الماركات</p>
+                            <p class="text-gray-500 text-xs mt-1">حلوان، القاهرة</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal: Create Listing -->
+    <div x-show="openCreateModal" 
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-cloak>
+        
+        <div class="modal-overlay absolute inset-0 bg-black/50" @click="openCreateModal = false"></div>
+        
+        <div class="bg-white rounded-xl w-full max-w-2xl relative z-10 flex flex-col max-h-[90vh]">
+            <div class="border-b p-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold">نوع القائمة الجديدة</h2>
+                <button @click="openCreateModal = false" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-4">
+                <p class="text-gray-600 mb-4">اختر فئة لمتابعة إنشاء القائمة الخاصة بك.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="flex items-center gap-4 p-4 border rounded-xl hover:bg-gray-50 transition-colors">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="package" class="text-blue-600"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">عنصر للبيع</div>
+                            <div class="text-xs text-gray-500">قم بإنشاء قائمة واحدة لعنصر واحد أو أكثر.</div>
+                        </div>
+                    </button>
+
+                    <button class="flex items-center gap-4 p-4 border rounded-xl hover:bg-gray-50 transition-colors">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="car" class="text-green-600"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">مركبة للبيع</div>
+                            <div class="text-xs text-gray-500">بيع سيارة أو شاحنة أو مركبة أخرى.</div>
+                        </div>
+                    </button>
+
+                    <button class="flex items-center gap-4 p-4 border rounded-xl hover:bg-gray-50 transition-colors">
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="home" class="text-orange-600"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">عقارات للبيع أو الإيجار</div>
+                            <div class="text-xs text-gray-500">قم بإدراج المنازل أو الشقق المتاحة.</div>
+                        </div>
+                    </button>
+
+                    <button class="flex items-center gap-4 p-4 border rounded-xl hover:bg-gray-50 transition-colors">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="briefcase" class="text-purple-600"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">فرص عمل</div>
+                            <div class="text-xs text-gray-500">أعلن عن وظائف شاغرة في منطقتك.</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t flex justify-end">
+                <button @click="openCreateModal = false" class="text-blue-600 font-bold px-6 py-2 hover:bg-blue-50 rounded-lg">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Simulate Dynamic Loading / Lazy Load effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
+        });
+
+        // Search highlight simulation
+        const searchInput = document.querySelector('input[placeholder*="البحث"]');
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.classList.add('ring-2', 'ring-blue-500');
+        });
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.classList.remove('ring-2', 'ring-blue-500');
+        });
+    </script>
+
+    <!-- Core App Integration Mock -->
+    <script src="js/utils/api-mock.js"></script>
+    <script src="js/modules/ui-controller.js"></script>
+</body>
+</html>
+```
