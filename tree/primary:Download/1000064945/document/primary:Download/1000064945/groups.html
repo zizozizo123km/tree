@@ -1,0 +1,433 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المجموعات | فيسبوك</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+        }
+
+        .fb-shadow {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .active-sidebar-item {
+            background-color: #e7f3ff;
+            color: #1877f2;
+        }
+
+        .group-card:hover .group-overlay {
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bcc0c4;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8d949e;
+        }
+
+        .post-input-shadow {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 overflow-x-hidden">
+
+    <!-- Header / Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect h-14 flex items-center justify-between px-4">
+        <!-- Right: Logo & Search -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <a href="index.html">
+                <svg viewBox="0 0 36 36" class="fill-current text-blue-600 w-10 h-10" fill="currentColor"><path d="M15 35.8C.8 34.8 0 24.7 0 18 0 8 8 0 18 0s18 8 18 18c0 6.7-.8 16.8-15 17.8V22h5l1-6h-6v-3c0-1.3.5-2 2-2h3V5h-5c-4.5 0-7 2.5-7 7v4h-3v6h3v13.8z"></path></svg>
+            </a>
+            <div class="relative hidden md:block">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+                </span>
+                <input type="text" placeholder="بحث في فيسبوك" class="bg-gray-100 pr-10 pl-4 py-2 rounded-full text-sm focus:outline-none w-64 border-none">
+            </div>
+        </div>
+
+        <!-- Center: Navigation Icons -->
+        <div class="hidden lg:flex items-center space-x-1 space-x-reverse h-full">
+            <a href="index.html" class="px-8 h-full flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 rounded-lg transition">
+                <i class="fa-solid fa-house text-xl"></i>
+            </a>
+            <a href="friends.html" class="px-8 h-full flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 rounded-lg transition">
+                <i class="fa-solid fa-user-group text-xl"></i>
+            </a>
+            <a href="marketplace.html" class="px-8 h-full flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 rounded-lg transition">
+                <i class="fa-solid fa-shop text-xl"></i>
+            </a>
+            <a href="groups.html" class="px-8 h-full flex items-center border-b-4 border-blue-600 text-blue-600">
+                <i class="fa-solid fa-users text-xl"></i>
+            </a>
+        </div>
+
+        <!-- Left: User Menu -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <a href="messages.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition">
+                <i class="fa-solid fa-comment-dots text-lg"></i>
+            </a>
+            <a href="notifications.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition relative">
+                <i class="fa-solid fa-bell text-lg"></i>
+                <span class="absolute top-0 right-0 bg-red-500 text-white text-[10px] rounded-full px-1">5</span>
+            </a>
+            <a href="profile.html" class="flex items-center">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100" class="w-10 h-10 rounded-full border border-gray-200 object-cover" alt="Profile">
+            </a>
+            <a href="settings.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition">
+                <i class="fa-solid fa-caret-down text-lg"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Grid -->
+    <main class="pt-14 grid grid-cols-12 gap-4 h-screen">
+        
+        <!-- Left Sidebar (Fixed) -->
+        <aside class="hidden xl:block col-span-3 bg-white p-4 overflow-y-auto h-full fixed right-0 w-[25%] shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-2xl font-bold">المجموعات</h1>
+                <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+            </div>
+
+            <div class="relative mb-6">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm"></i>
+                </span>
+                <input type="text" placeholder="بحث في المجموعات" class="bg-gray-100 pr-9 pl-4 py-2 rounded-full text-sm w-full focus:outline-none">
+            </div>
+
+            <nav class="space-y-1">
+                <a href="#" class="active-sidebar-item flex items-center space-x-3 space-x-reverse p-3 rounded-xl">
+                    <div class="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                        <i class="fa-solid fa-newspaper text-sm"></i>
+                    </div>
+                    <span class="font-semibold text-md">آخر الأخبار</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center space-x-3 space-x-reverse p-3 rounded-xl transition">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-compass text-sm"></i>
+                    </div>
+                    <span class="font-semibold text-md">استكشاف</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center space-x-3 space-x-reverse p-3 rounded-xl transition">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-bell text-sm"></i>
+                    </div>
+                    <span class="font-semibold text-md">الإشعارات</span>
+                </a>
+                
+                <button class="w-full mt-4 bg-blue-100 hover:bg-blue-200 text-blue-600 py-2 rounded-lg font-bold flex items-center justify-center space-x-2 space-x-reverse transition">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>إنشاء مجموعة جديدة</span>
+                </button>
+
+                <hr class="my-4 border-gray-200">
+
+                <div>
+                    <div class="flex items-center justify-between mb-2 px-2">
+                        <h3 class="font-bold text-gray-600">المجموعات التي انضممت إليها</h3>
+                        <a href="#" class="text-blue-500 text-sm hover:bg-blue-50 px-2 py-1 rounded">رؤية الكل</a>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <!-- Group Item -->
+                        <div class="flex items-center space-x-3 space-x-reverse p-2 sidebar-item rounded-lg cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=100" class="w-12 h-12 rounded-lg object-cover" alt="Group">
+                            <div>
+                                <h4 class="font-semibold text-sm leading-tight">عالم البرمجة والتطوير</h4>
+                                <p class="text-[12px] text-gray-500">منذ 5 دقائق</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 space-x-reverse p-2 sidebar-item rounded-lg cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=100" class="w-12 h-12 rounded-lg object-cover" alt="Group">
+                            <div>
+                                <h4 class="font-semibold text-sm leading-tight">مصممو واجهات المستخدم العربي</h4>
+                                <p class="text-[12px] text-gray-500">منذ ساعتين</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 space-x-reverse p-2 sidebar-item rounded-lg cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=100" class="w-12 h-12 rounded-lg object-cover" alt="Group">
+                            <div>
+                                <h4 class="font-semibold text-sm leading-tight">ريادة الأعمال والشركات الناشئة</h4>
+                                <p class="text-[12px] text-gray-500">منذ يوم</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Feed Area -->
+        <div class="col-span-12 xl:col-span-9 xl:mr-[25%] p-4 lg:p-8">
+            <div class="max-w-[700px] mx-auto">
+                
+                <!-- Discover Section -->
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold">مجموعات قد تعجبك</h2>
+                        <a href="#" class="text-blue-600 hover:underline">عرض الكل</a>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <!-- Suggestion Card 1 -->
+                        <div class="bg-white rounded-xl overflow-hidden fb-shadow animate-fade-in">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400" class="w-full h-24 object-cover" alt="Group Banner">
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold text-sm mb-1 line-clamp-1">شبكة توظيف المطورين</h4>
+                                <p class="text-[12px] text-gray-500 mb-3">150 ألف عضو • 10 منشورات يومياً</p>
+                                <button class="w-full bg-blue-100 text-blue-600 font-bold py-1.5 rounded-lg hover:bg-blue-200 transition text-sm">انضمام</button>
+                            </div>
+                        </div>
+                        <!-- Suggestion Card 2 -->
+                        <div class="bg-white rounded-xl overflow-hidden fb-shadow animate-fade-in" style="animation-delay: 0.1s;">
+                            <img src="https://images.unsplash.com/photo-1454165833767-027ffea10c3b?auto=format&fit=crop&w=400" class="w-full h-24 object-cover" alt="Group Banner">
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold text-sm mb-1 line-clamp-1">تعلم اللغة الإنجليزية مجاناً</h4>
+                                <p class="text-[12px] text-gray-500 mb-3">890 ألف عضو • 50 منشور يومياً</p>
+                                <button class="w-full bg-blue-100 text-blue-600 font-bold py-1.5 rounded-lg hover:bg-blue-200 transition text-sm">انضمام</button>
+                            </div>
+                        </div>
+                        <!-- Suggestion Card 3 -->
+                        <div class="bg-white rounded-xl overflow-hidden fb-shadow animate-fade-in" style="animation-delay: 0.2s;">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400" class="w-full h-24 object-cover" alt="Group Banner">
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold text-sm mb-1 line-clamp-1">محبو التصوير الفوتوغرافي</h4>
+                                <p class="text-[12px] text-gray-500 mb-3">45 ألف عضو • منشور واحد أسبوعياً</p>
+                                <button class="w-full bg-blue-100 text-blue-600 font-bold py-1.5 rounded-lg hover:bg-blue-200 transition text-sm">انضمام</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="mb-8 border-gray-300">
+
+                <!-- Activity Feed -->
+                <div class="space-y-4 pb-10">
+                    <h2 class="text-xl font-bold mb-4">آخر النشاطات</h2>
+
+                    <!-- Post Card 1 -->
+                    <div class="bg-white rounded-xl fb-shadow p-4 animate-fade-in">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <div class="relative">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100" class="w-10 h-10 rounded-full object-cover" alt="User">
+                                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=40" class="absolute -bottom-1 -right-1 w-5 h-5 rounded border-2 border-white object-cover" alt="Group Mini">
+                                </div>
+                                <div>
+                                    <div class="flex items-center space-x-1 space-x-reverse">
+                                        <h4 class="font-bold text-sm hover:underline cursor-pointer">أحمد محمد</h4>
+                                        <span class="text-gray-500 text-sm">نشر في</span>
+                                        <h4 class="font-bold text-sm hover:underline cursor-pointer">عالم البرمجة</h4>
+                                    </div>
+                                    <div class="flex items-center space-x-1 space-x-reverse text-[12px] text-gray-500">
+                                        <span>منذ 3 ساعات</span>
+                                        <span>•</span>
+                                        <i class="fa-solid fa-earth-americas"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="text-gray-500 hover:bg-gray-100 w-8 h-8 rounded-full">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                        </div>
+                        <p class="text-sm mb-4 leading-relaxed">
+                            يا شباب، ما هي أفضل المصادر لتعلم React.js في عام 2024؟ هل تنصحون بدورات معينة أم الاكتفاء بالتوثيق الرسمي (Documentation)؟
+                        </p>
+                        <div class="flex items-center justify-between text-gray-500 py-2 border-t border-b border-gray-100 mb-2">
+                            <div class="flex items-center -space-x-1 space-x-reverse">
+                                <div class="bg-blue-500 w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                                    <i class="fa-solid fa-thumbs-up text-white text-[10px]"></i>
+                                </div>
+                                <div class="bg-red-500 w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                                    <i class="fa-solid fa-heart text-white text-[10px]"></i>
+                                </div>
+                                <span class="pr-6 text-sm">١٢٤</span>
+                            </div>
+                            <div class="text-sm">
+                                <span>٤٥ تعليقاً</span>
+                                <span class="mx-1">•</span>
+                                <span>٣ مشاركات</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-around h-10">
+                            <button class="flex items-center justify-center space-x-2 space-x-reverse flex-1 h-full hover:bg-gray-100 rounded-lg text-gray-600 transition">
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                <span class="text-sm font-semibold">أعجبني</span>
+                            </button>
+                            <button class="flex items-center justify-center space-x-2 space-x-reverse flex-1 h-full hover:bg-gray-100 rounded-lg text-gray-600 transition">
+                                <i class="fa-regular fa-comment"></i>
+                                <span class="text-sm font-semibold">تعليق</span>
+                            </button>
+                            <button class="flex items-center justify-center space-x-2 space-x-reverse flex-1 h-full hover:bg-gray-100 rounded-lg text-gray-600 transition">
+                                <i class="fa-solid fa-share"></i>
+                                <span class="text-sm font-semibold">مشاركة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Post Card 2 (Image Post) -->
+                    <div class="bg-white rounded-xl fb-shadow p-4 animate-fade-in" style="animation-delay: 0.1s;">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <div class="relative">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100" class="w-10 h-10 rounded-full object-cover" alt="User">
+                                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=40" class="absolute -bottom-1 -right-1 w-5 h-5 rounded border-2 border-white object-cover" alt="Group Mini">
+                                </div>
+                                <div>
+                                    <div class="flex items-center space-x-1 space-x-reverse">
+                                        <h4 class="font-bold text-sm hover:underline cursor-pointer">سارة خالد</h4>
+                                        <span class="text-gray-500 text-sm">نشرت في</span>
+                                        <h4 class="font-bold text-sm hover:underline cursor-pointer">مصممو واجهات المستخدم</h4>
+                                    </div>
+                                    <div class="flex items-center space-x-1 space-x-reverse text-[12px] text-gray-500">
+                                        <span>منذ ساعة</span>
+                                        <span>•</span>
+                                        <i class="fa-solid fa-earth-americas"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm mb-4 leading-relaxed">
+                            انتهيت للتو من تصميم واجهة تطبيق "توصيل طلبات" جديد، ما رأيكم في تنسيق الألوان؟
+                        </p>
+                        <div class="rounded-lg overflow-hidden mb-4">
+                            <img src="https://images.unsplash.com/photo-1586717791821-3f44a563dc4c?auto=format&fit=crop&w=800" class="w-full object-cover max-h-[400px]" alt="UI Design">
+                        </div>
+                        <div class="flex items-center justify-between text-gray-500 py-2 border-t border-b border-gray-100 mb-2">
+                            <div class="flex items-center -space-x-1 space-x-reverse">
+                                <div class="bg-blue-500 w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                                    <i class="fa-solid fa-thumbs-up text-white text-[10px]"></i>
+                                </div>
+                                <span class="pr-6 text-sm">٢٥٦</span>
+                            </div>
+                            <div class="text-sm">
+                                <span>٨٩ تعليقاً</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-around h-10">
+                            <button class="flex items-center justify-center space-x-2 space-x-reverse flex-1 h-full hover:bg-gray-100 rounded-lg text-gray-600 transition">
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                <span class="text-sm font-semibold">أعجبني</span>
+                            </button>
+                            <button class="flex items-center justify-center space-x-2 space-x-reverse flex-1 h-full hover:bg-gray-100 rounded-lg text-gray-600 transition">
+                                <i class="fa-regular fa-comment"></i>
+                                <span class="text-sm font-semibold">تعليق</span>
+                            </button>
+                            <button class="flex items-center justify-center space-x-2 space-x-reverse flex-1 h-full hover:bg-gray-100 rounded-lg text-gray-600 transition">
+                                <i class="fa-solid fa-share"></i>
+                                <span class="text-sm font-semibold">مشاركة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Loader (Infinite Scroll Style) -->
+                    <div class="flex justify-center py-4">
+                        <div class="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Float Button (Mobile) -->
+        <div class="fixed bottom-6 left-6 xl:hidden">
+            <button class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center text-2xl hover:bg-blue-700 active:scale-95 transition">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- JS Scripts Implementation -->
+    <script src="js/core/app.js"></script>
+    <script src="js/modules/ui-controller.js"></script>
+    <script>
+        // Production-ready interaction logic
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Groups Module Initialized Successfully.");
+            
+            // Handle active sidebar state
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    sidebarItems.forEach(i => i.classList.remove('active-sidebar-item'));
+                    this.classList.add('active-sidebar-item');
+                });
+            });
+
+            // Like Button Toggle Simulation
+            const likeButtons = document.querySelectorAll('.fa-regular.fa-thumbs-up');
+            likeButtons.forEach(btn => {
+                btn.parentElement.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span');
+                    if(icon.classList.contains('fa-regular')) {
+                        icon.classList.remove('fa-regular');
+                        icon.classList.add('fa-solid', 'text-blue-600');
+                        text.classList.add('text-blue-600');
+                    } else {
+                        icon.classList.remove('fa-solid', 'text-blue-600');
+                        icon.classList.add('fa-regular');
+                        text.classList.remove('text-blue-600');
+                    }
+                });
+            });
+
+            // Smooth Scroll Behavior
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('nav');
+                if (window.scrollY > 0) {
+                    header.classList.add('shadow-md');
+                } else {
+                    header.classList.remove('shadow-md');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```
