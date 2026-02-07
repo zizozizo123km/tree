@@ -1,0 +1,378 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأصدقاء | فيسبوك</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bcc0c4;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8d949e;
+        }
+
+        .fb-shadow {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .active-link {
+            background-color: #ebf5ff;
+            color: #1877f2;
+        }
+
+        .sidebar-item:hover {
+            background-color: #e4e6e9;
+        }
+
+        .friend-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Glassmorphism Navigation */
+        nav {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .btn-primary {
+            background-color: #1877f2;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #166fe5;
+        }
+
+        .btn-secondary {
+            background-color: #e4e6e9;
+            transition: background 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d8dadf;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-gray-300 z-50 flex items-center justify-between px-4">
+        <!-- Right: Logo & Search -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <a href="index.html">
+                <svg viewBox="0 0 36 36" class="w-10 h-10 fill-blue-600" fill="currentColor">
+                    <path d="M15 35.8C.8 34.8 0 24.7 0 18 0 8.1 8.1 0 18 0s18 8.1 18 18c0 6.7-.8 16.8-15 17.8V22h5l.7-6h-5.7v-3.3c0-1.2.6-2.1 2.3-2.1H23V5.4c-.4 0-1.8-.2-3.4-.2-3.5 0-5.7 2.1-5.7 6.1V16h-5v6h5v13.8z"></path>
+                </svg>
+            </a>
+            <div class="relative hidden md:block">
+                <input type="text" placeholder="البحث في فيسبوك" class="bg-gray-100 rounded-full py-2 pr-10 pl-4 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fa-solid fa-search absolute right-3 top-3 text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Center: Main Icons -->
+        <div class="hidden lg:flex items-center space-x-1 space-x-reverse h-full">
+            <a href="index.html" class="px-10 h-full flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 rounded-lg transition-all" title="الرئيسية">
+                <i class="fa-solid fa-house text-xl"></i>
+            </a>
+            <a href="friends.html" class="px-10 h-full flex items-center border-b-4 border-blue-600 text-blue-600" title="الأصدقاء">
+                <i class="fa-solid fa-user-group text-xl"></i>
+            </a>
+            <a href="marketplace.html" class="px-10 h-full flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 rounded-lg transition-all" title="المتجر">
+                <i class="fa-solid fa-store text-xl"></i>
+            </a>
+            <a href="groups.html" class="px-10 h-full flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 rounded-lg transition-all" title="المجموعات">
+                <i class="fa-solid fa-users text-xl"></i>
+            </a>
+        </div>
+
+        <!-- Left: User Menu & Options -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <a href="messages.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors relative">
+                <i class="fa-brands fa-facebook-messenger text-black"></i>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">3</span>
+            </a>
+            <a href="notifications.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors relative">
+                <i class="fa-solid fa-bell text-black"></i>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">5</span>
+            </a>
+            <a href="profile.html">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100" class="w-10 h-10 rounded-full border border-gray-200" alt="الملف الشخصي">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex pt-14 min-h-screen">
+
+        <!-- Right Sidebar (Navigation Links) -->
+        <aside class="fixed right-0 top-14 bottom-0 w-80 bg-white border-l border-gray-300 p-4 hidden md:block overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-2xl font-bold">الأصدقاء</h1>
+                <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg active-link">
+                    <div class="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                    <span class="font-semibold">الرئيسية</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg sidebar-item">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-user-minus"></i>
+                    </div>
+                    <span class="font-semibold flex-1">طلبات الصداقة</span>
+                    <i class="fa-solid fa-chevron-left text-gray-400 text-sm"></i>
+                </a>
+                <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg sidebar-item">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <span class="font-semibold flex-1">الاقتراحات</span>
+                    <i class="fa-solid fa-chevron-left text-gray-400 text-sm"></i>
+                </a>
+                <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg sidebar-item">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-list"></i>
+                    </div>
+                    <span class="font-semibold flex-1">كل الأصدقاء</span>
+                    <i class="fa-solid fa-chevron-left text-gray-400 text-sm"></i>
+                </a>
+                <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg sidebar-item">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    <span class="font-semibold flex-1">أعياد الميلاد</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg sidebar-item">
+                    <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-user-tag"></i>
+                    </div>
+                    <span class="font-semibold flex-1">قوائم مخصصة</span>
+                    <i class="fa-solid fa-chevron-left text-gray-400 text-sm"></i>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="md:mr-80 w-full p-8">
+            
+            <!-- Section: Friend Requests -->
+            <section class="mb-10">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold">طلبات الصداقة</h2>
+                    <a href="#" class="text-blue-600 hover:bg-gray-100 px-2 py-1 rounded">عرض الكل</a>
+                </div>
+
+                <!-- Grid for Requests -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                    
+                    <!-- Card 1 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">أحمد المنصوري</h3>
+                                <p class="text-gray-500 text-sm mb-3">5 أصدقاء مشتركين</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full btn-primary text-white py-2 px-4 rounded-lg font-bold">تأكيد</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">حذف</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">سارة الكواري</h3>
+                                <p class="text-gray-500 text-sm mb-3">12 صديقاً مشتركاً</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full btn-primary text-white py-2 px-4 rounded-lg font-bold">تأكيد</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">حذف</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <hr class="border-gray-300 my-8">
+
+            <!-- Section: People You May Know -->
+            <section>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold">أشخاص قد تعرفهم</h2>
+                    <a href="#" class="text-blue-600 hover:bg-gray-100 px-2 py-1 rounded">عرض الكل</a>
+                </div>
+
+                <!-- Grid for Suggestions -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                    
+                    <!-- Suggestion 1 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">ياسين الراجحي</h3>
+                                <p class="text-gray-500 text-sm mb-3">يعمل في شركة تقنية</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full bg-blue-100 text-blue-700 py-2 px-4 rounded-lg font-bold hover:bg-blue-200 transition-colors">إضافة صديق</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">إزالة</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestion 2 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ff9169853d?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">مريم الفارس</h3>
+                                <p class="text-gray-500 text-sm mb-3">صديقة لـ محمد وخالد</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full bg-blue-100 text-blue-700 py-2 px-4 rounded-lg font-bold hover:bg-blue-200 transition-colors">إضافة صديق</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">إزالة</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestion 3 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">فهد التميمي</h3>
+                                <p class="text-gray-500 text-sm mb-3">9 أصدقاء مشتركين</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full bg-blue-100 text-blue-700 py-2 px-4 rounded-lg font-bold hover:bg-blue-200 transition-colors">إضافة صديق</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">إزالة</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestion 4 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">نورة الشهري</h3>
+                                <p class="text-gray-500 text-sm mb-3">درست في جامعة الملك سعود</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full bg-blue-100 text-blue-700 py-2 px-4 rounded-lg font-bold hover:bg-blue-200 transition-colors">إضافة صديق</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">إزالة</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestion 5 -->
+                    <div class="friend-card bg-white rounded-xl overflow-hidden fb-shadow flex flex-col">
+                        <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=400" alt="User" class="w-full h-48 object-cover">
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">سلطان العتيبي</h3>
+                                <p class="text-gray-500 text-sm mb-3">من مدينة الرياض</p>
+                            </div>
+                            <div class="space-y-2">
+                                <button class="w-full bg-blue-100 text-blue-700 py-2 px-4 rounded-lg font-bold hover:bg-blue-200 transition-colors">إضافة صديق</button>
+                                <button class="w-full btn-secondary text-black py-2 px-4 rounded-lg font-bold">إزالة</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="mt-8 flex justify-center">
+                    <button class="bg-white px-12 py-2 rounded-lg font-bold fb-shadow hover:bg-gray-50 transition-colors">عرض المزيد</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Mobile Navigation Bar (Bottom) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 h-14 md:hidden flex justify-around items-center z-50">
+        <a href="index.html" class="text-gray-500 hover:text-blue-600">
+            <i class="fa-solid fa-house text-xl"></i>
+        </a>
+        <a href="friends.html" class="text-blue-600">
+            <i class="fa-solid fa-user-group text-xl"></i>
+        </a>
+        <a href="messages.html" class="text-gray-500">
+            <i class="fa-brands fa-facebook-messenger text-xl"></i>
+        </a>
+        <a href="notifications.html" class="text-gray-500">
+            <i class="fa-solid fa-bell text-xl"></i>
+        </a>
+        <a href="profile.html" class="text-gray-500">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </a>
+    </div>
+
+    <!-- Script Placeholder for Modules -->
+    <script src="js/core/app.js"></script>
+    <script src="js/modules/ui-controller.js"></script>
+
+    <script>
+        // Simple UI Interaction logic
+        document.querySelectorAll('.btn-primary, .btn-secondary, .bg-blue-100').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const action = this.innerText;
+                const card = this.closest('.friend-card');
+                
+                if(action === 'تأكيد' || action === 'إضافة صديق') {
+                    this.innerHTML = '<i class="fa-solid fa-check ml-2"></i>تم الإرسال';
+                    this.classList.replace('bg-blue-600', 'bg-green-600');
+                    this.classList.replace('bg-blue-100', 'bg-green-100');
+                    this.classList.replace('text-blue-700', 'text-green-700');
+                } else if (action === 'حذف' || action === 'إزالة') {
+                    card.style.opacity = '0.5';
+                    card.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                        card.classList.add('hidden');
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```
