@@ -1,0 +1,272 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد | فيسبوك</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --fb-blue: #1877f2;
+            --fb-green: #42b72a;
+            --fb-bg: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--fb-bg);
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 1);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .fb-input {
+            background: #f5f6f7;
+            border: 1px solid #dddfe2;
+            border-radius: 5px;
+            padding: 11px;
+            width: 100%;
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        .fb-input:focus {
+            outline: none;
+            border-color: var(--fb-blue);
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .btn-signup {
+            background-color: var(--fb-green);
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            padding: 10px 40px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-signup:hover {
+            background-color: #36a420;
+        }
+
+        .gender-container {
+            border: 1px solid #dddfe2;
+            border-radius: 5px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .gender-container input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .footer-link {
+            color: #1c1e21;
+            font-size: 12px;
+            margin: 0 5px;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center pt-10 pb-20">
+        
+        <!-- Branding -->
+        <div class="mb-6 text-center">
+            <h1 class="text-6xl font-extrabold text-[#1877f2] mb-2">facebook</h1>
+        </div>
+
+        <!-- Registration Card -->
+        <div class="glass-card w-full max-w-[432px] p-4 animate-fade-in">
+            <div class="border-b border-gray-200 pb-3 mb-4 text-center">
+                <h2 class="text-2xl font-bold text-[#1c1e21]">إنشاء حساب جديد</h2>
+                <p class="text-gray-500 text-sm">الأمر سهل وسريع.</p>
+            </div>
+
+            <form id="registrationForm" action="index.html" class="space-y-3">
+                <!-- Name Row -->
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="text" placeholder="الاسم الأول" class="fb-input" required>
+                    <input type="text" placeholder="اسم العائلة" class="fb-input" required>
+                </div>
+
+                <!-- Contact Info -->
+                <input type="text" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" class="fb-input" required>
+                <input type="password" placeholder="كلمة سر جديدة" class="fb-input" required>
+
+                <!-- Date of Birth -->
+                <div class="space-y-1">
+                    <label class="text-xs text-gray-600 block">تاريخ الميلاد</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <select class="fb-input text-sm p-2" id="day"></select>
+                        <select class="fb-input text-sm p-2" id="month">
+                            <option value="1">يناير</option>
+                            <option value="2">فبراير</option>
+                            <option value="3">مارس</option>
+                            <option value="4">أبريل</option>
+                            <option value="5">مايو</option>
+                            <option value="6">يونيو</option>
+                            <option value="7">يوليو</option>
+                            <option value="8">أغسطس</option>
+                            <option value="9">سبتمبر</option>
+                            <option value="10">أكتوبر</option>
+                            <option value="11">نوفمبر</option>
+                            <option value="12">ديسمبر</option>
+                        </select>
+                        <select class="fb-input text-sm p-2" id="year"></select>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="space-y-1">
+                    <label class="text-xs text-gray-600 block">الجنس</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <label class="gender-container">
+                            <span>أنثى</span>
+                            <input type="radio" name="gender" value="female">
+                        </label>
+                        <label class="gender-container">
+                            <span>ذكر</span>
+                            <input type="radio" name="gender" value="male">
+                        </label>
+                        <label class="gender-container">
+                            <span>مخصص</span>
+                            <input type="radio" name="gender" value="custom">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Policy Text -->
+                <div class="text-[11px] text-gray-500 mt-4 leading-relaxed">
+                    يُحتمل أن يتلقى الأشخاص الذين يستخدمون خدمتنا معلومات الاتصال الخاصة بك ويقومون بتحميلها على فيسبوك. 
+                    <a href="#" class="text-[#385898] hover:underline">تعرّف على المزيد</a>.
+                    <br><br>
+                    بالنقر على "إنشاء حساب"، فإنك توافق على 
+                    <a href="#" class="text-[#385898] hover:underline">الشروط</a> و
+                    <a href="#" class="text-[#385898] hover:underline">سياسة الخصوصية</a> و
+                    <a href="#" class="text-[#385898] hover:underline">سياسة ملفات تعريف الارتباط</a>.
+                </div>
+
+                <!-- Submit -->
+                <div class="flex justify-center pt-4">
+                    <button type="submit" class="btn-signup shadow-lg">
+                        إنشاء حساب
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-4 text-center">
+                <a href="login.html" class="text-blue-600 hover:underline text-sm font-semibold">هل لديك حساب بالفعل؟</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="bg-white py-10 px-4 mt-auto">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-wrap border-b border-gray-300 pb-2 mb-2">
+                <span class="footer-link">العربية</span>
+                <span class="footer-link text-gray-400">English (US)</span>
+                <span class="footer-link text-gray-400">Français (France)</span>
+                <span class="footer-link text-gray-400">Español</span>
+                <span class="footer-link text-gray-400">Deutsch</span>
+                <span class="footer-link text-gray-400">Italiano</span>
+                <span class="footer-link text-gray-400">Português (Brasil)</span>
+            </div>
+            <div class="flex flex-wrap text-[12px] text-gray-500 leading-6">
+                <a href="register.html" class="footer-link">تسجيل الحساب</a>
+                <a href="login.html" class="footer-link">تسجيل الدخول</a>
+                <a href="marketplace.html" class="footer-link">Marketplace</a>
+                <a href="groups.html" class="footer-link">المجموعات</a>
+                <a href="#" class="footer-link">Meta Pay</a>
+                <a href="#" class="footer-link">Meta Store</a>
+                <a href="#" class="footer-link">Meta Quest</a>
+                <a href="#" class="footer-link">Instagram</a>
+                <a href="#" class="footer-link">Threads</a>
+                <a href="#" class="footer-link">جمع تبرعات</a>
+                <a href="#" class="footer-link">الخدمات</a>
+                <a href="#" class="footer-link">مركز التصويت</a>
+                <a href="#" class="footer-link">سياسة الخصوصية</a>
+                <a href="#" class="footer-link">مركز الخصوصية</a>
+                <a href="settings.html" class="footer-link">الإعدادات</a>
+            </div>
+            <div class="mt-4 text-[11px] text-gray-500">
+                Meta © 2024
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/utils/api-mock.js"></script>
+    <script src="js/modules/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const daySelect = document.getElementById('day');
+            const yearSelect = document.getElementById('year');
+
+            // Populate Days
+            for (let i = 1; i <= 31; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerHTML = i;
+                if(i === new Date().getDate()) opt.selected = true;
+                daySelect.appendChild(opt);
+            }
+
+            // Populate Years (e.g., last 100 years)
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= currentYear - 100; i--) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerHTML = i;
+                if(i === currentYear - 20) opt.selected = true;
+                yearSelect.appendChild(opt);
+            }
+
+            // Form Submit Interceptor
+            document.getElementById('registrationForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Simulation of registration logic
+                const btn = e.target.querySelector('button');
+                btn.innerHTML = 'جاري الإنشاء...';
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
+```
