@@ -1,0 +1,509 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي | فيسبوك</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --fb-blue: #1877F2;
+            --fb-bg: #F0F2F5;
+            --fb-card: #FFFFFF;
+            --fb-text-primary: #050505;
+            --fb-text-secondary: #65676B;
+            --fb-divider: #CED0D4;
+            --fb-hover: #E4E6EB;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--fb-bg);
+            color: var(--fb-text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Effect for Nav */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--fb-divider);
+            z-index: 1000;
+        }
+
+        .profile-cover {
+            height: 400px;
+            background: linear-gradient(to bottom, #ccc, #eee);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            margin-top: -80px;
+            z-index: 10;
+        }
+
+        .profile-avatar {
+            width: 168px;
+            height: 168px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background: white;
+            overflow: hidden;
+        }
+
+        .nav-active {
+            color: var(--fb-blue);
+            position: relative;
+        }
+
+        .nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--fb-blue);
+        }
+
+        .tab-item {
+            padding: 14px 16px;
+            font-weight: 600;
+            color: var(--fb-text-secondary);
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 8px;
+        }
+
+        .tab-item:hover {
+            background-color: var(--fb-hover);
+        }
+
+        .card-shadow {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .sticky-sidebar {
+            position: sticky;
+            top: 70px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="glass-nav fixed top-0 w-full h-14 flex items-center justify-between px-4 z-50">
+        <!-- Right: Logo & Search -->
+        <div class="flex items-center gap-2">
+            <a href="index.html">
+                <img src="assets/images/brand/logo.svg" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg'" class="w-10 h-10" alt="Facebook">
+            </a>
+            <div class="relative hidden md:block">
+                <input type="text" placeholder="بحث في فيسبوك" class="bg-[#F0F2F5] rounded-full py-2 px-10 outline-none w-64 focus:ring-2 ring-blue-500 transition-all">
+                <i data-lucide="search" class="absolute right-3 top-2.5 text-gray-500 w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- Center: Icons -->
+        <div class="hidden lg:flex items-center gap-1 h-full">
+            <a href="index.html" class="px-8 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition-all">
+                <i data-lucide="home" class="text-gray-600"></i>
+            </a>
+            <a href="marketplace.html" class="px-8 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition-all">
+                <i data-lucide="store" class="text-gray-600"></i>
+            </a>
+            <a href="groups.html" class="px-8 h-full flex items-center border-b-4 border-transparent hover:bg-gray-100 transition-all">
+                <i data-lucide="users" class="text-gray-600"></i>
+            </a>
+            <a href="profile.html" class="px-8 h-full flex items-center border-b-4 border-blue-600">
+                <i data-lucide="user" class="text-blue-600"></i>
+            </a>
+        </div>
+
+        <!-- Left: User Actions -->
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300">
+                <i data-lucide="grid" class="w-5 h-5"></i>
+            </div>
+            <a href="messages.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+            </a>
+            <a href="notifications.html" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 relative">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+                <span class="absolute -top-1 -left-1 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">3</span>
+            </a>
+            <a href="settings.html" class="w-10 h-10 bg-gray-200 rounded-full overflow-hidden border border-gray-300">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100" alt="Avatar">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="mt-14 w-full">
+        <!-- Header Section -->
+        <div class="bg-white shadow">
+            <div class="max-w-5xl mx-auto">
+                <!-- Cover Photo -->
+                <div class="profile-cover relative">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200" alt="Cover">
+                    <button class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 text-sm shadow-md hover:bg-gray-100">
+                        <i data-lucide="camera" class="w-5 h-5"></i>
+                        تعديل صورة الغلاف
+                    </button>
+                </div>
+
+                <!-- Profile Info Area -->
+                <div class="px-8 pb-4">
+                    <div class="flex flex-col md:flex-row items-end justify-between">
+                        <div class="flex flex-col md:flex-row items-center md:items-end gap-6">
+                            <div class="profile-avatar-container">
+                                <div class="profile-avatar">
+                                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200" class="w-full h-full object-cover">
+                                </div>
+                                <button class="absolute bottom-2 left-2 bg-gray-200 p-2 rounded-full border-4 border-white hover:bg-gray-300">
+                                    <i data-lucide="camera" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                            <div class="mb-4 text-center md:text-right">
+                                <h1 class="text-3xl font-extrabold">أحمد محمد</h1>
+                                <p class="text-gray-600 font-semibold">1.2 ألف صديق</p>
+                                <div class="flex -space-x-2 space-x-reverse mt-2 justify-center md:justify-start">
+                                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=50" class="w-8 h-8 rounded-full border-2 border-white">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=50" class="w-8 h-8 rounded-full border-2 border-white">
+                                    <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=50" class="w-8 h-8 rounded-full border-2 border-white">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Header Buttons -->
+                        <div class="flex gap-2 mb-6">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-blue-700 transition">
+                                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                                إضافة إلى القصة
+                            </button>
+                            <button class="bg-gray-200 px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-gray-300 transition">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                                تعديل الملف الشخصي
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr class="mt-4 border-gray-300">
+
+                    <!-- Profile Tabs -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center mt-1">
+                            <div class="tab-item text-blue-600 border-b-4 border-blue-600 rounded-none">المنشورات</div>
+                            <div class="tab-item">حول</div>
+                            <div class="tab-item">الأصدقاء</div>
+                            <div class="tab-item">الصور</div>
+                            <div class="tab-item">الفيديوهات</div>
+                            <div class="tab-item hidden md:block">المزيد</div>
+                        </div>
+                        <button class="bg-gray-200 p-2 rounded-lg hover:bg-gray-300">
+                            <i data-lucide="more-horizontal"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Body Content -->
+        <div class="max-w-5xl mx-auto px-4 py-4 grid grid-cols-1 md:grid-cols-12 gap-4">
+            
+            <!-- Left Sidebar (Intro, Photos, Friends) -->
+            <div class="md:col-span-5 space-y-4">
+                
+                <!-- Intro Card -->
+                <div class="bg-white p-4 rounded-xl shadow card-shadow">
+                    <h2 class="text-xl font-bold mb-4">نبذة</h2>
+                    <p class="text-center text-gray-700 mb-4">مصمم واجهات ومطور ويب شغوف بالتقنية والإبداع. 🚀</p>
+                    <button class="w-full bg-gray-200 hover:bg-gray-300 py-2 rounded-lg font-bold mb-4">تعديل السيرة الذاتية</button>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 text-gray-700">
+                            <i data-lucide="briefcase" class="w-5 h-5 text-gray-400"></i>
+                            <span>يعمل لدى <b>شركة التقنية المتقدمة</b></span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-700">
+                            <i data-lucide="graduation-cap" class="w-5 h-5 text-gray-400"></i>
+                            <span>درس في <b>جامعة الملك سعود</b></span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-700">
+                            <i data-lucide="home" class="w-5 h-5 text-gray-400"></i>
+                            <span>يقيم في <b>الرياض، السعودية</b></span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-700">
+                            <i data-lucide="heart" class="w-5 h-5 text-gray-400"></i>
+                            <span>أعزب</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-200 hover:bg-gray-300 py-2 rounded-lg font-bold mt-4">تعديل التفاصيل</button>
+                </div>
+
+                <!-- Photos Card -->
+                <div class="bg-white p-4 rounded-xl shadow card-shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold">الصور</h2>
+                        <a href="#" class="text-blue-600 hover:bg-blue-50 px-2 py-1 rounded">عرض كل الصور</a>
+                    </div>
+                    <div class="grid grid-cols-3 gap-1 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=200" class="h-28 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=200" class="h-28 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=200" class="h-28 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1500622345453-73bb99c98bba?auto=format&fit=crop&w=200" class="h-28 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=200" class="h-28 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=200" class="h-28 w-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Friends Card -->
+                <div class="bg-white p-4 rounded-xl shadow card-shadow">
+                    <div class="flex justify-between items-center mb-1">
+                        <h2 class="text-xl font-bold">الأصدقاء</h2>
+                        <a href="friends.html" class="text-blue-600 hover:bg-blue-50 px-2 py-1 rounded">عرض كل الأصدقاء</a>
+                    </div>
+                    <p class="text-gray-500 mb-4">1,250 صديقاً</p>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150" class="rounded-lg h-24 w-full object-cover mb-1">
+                            <p class="text-xs font-bold">خالد العتيبي</p>
+                        </div>
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150" class="rounded-lg h-24 w-full object-cover mb-1">
+                            <p class="text-xs font-bold">سارة القحطاني</p>
+                        </div>
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=150" class="rounded-lg h-24 w-full object-cover mb-1">
+                            <p class="text-xs font-bold">ريم عبدالله</p>
+                        </div>
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150" class="rounded-lg h-24 w-full object-cover mb-1">
+                            <p class="text-xs font-bold">محمد الشمري</p>
+                        </div>
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150" class="rounded-lg h-24 w-full object-cover mb-1">
+                            <p class="text-xs font-bold">فهد الزهراني</p>
+                        </div>
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150" class="rounded-lg h-24 w-full object-cover mb-1">
+                            <p class="text-xs font-bold">لورا علي</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Content (Feed) -->
+            <div class="md:col-span-7 space-y-4">
+                
+                <!-- Create Post -->
+                <div class="bg-white p-4 rounded-xl shadow card-shadow">
+                    <div class="flex gap-3 mb-4">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50" class="w-10 h-10 rounded-full">
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-500 flex-1 text-right px-4 rounded-full transition">بمَ تفكر يا أحمد؟</button>
+                    </div>
+                    <hr class="mb-3">
+                    <div class="flex justify-around">
+                        <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition">
+                            <i data-lucide="video" class="text-red-500"></i>
+                            <span class="font-bold text-gray-600">فيديو بث مباشر</span>
+                        </button>
+                        <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition">
+                            <i data-lucide="image" class="text-green-500"></i>
+                            <span class="font-bold text-gray-600">صورة/فيديو</span>
+                        </button>
+                        <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition">
+                            <i data-lucide="flag" class="text-blue-500"></i>
+                            <span class="font-bold text-gray-600">مناسبة شخصية</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manage Posts Header -->
+                <div class="bg-white p-4 rounded-xl shadow card-shadow flex justify-between items-center">
+                    <h2 class="text-xl font-bold">المنشورات</h2>
+                    <div class="flex gap-2">
+                        <button class="bg-gray-200 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1 hover:bg-gray-300">
+                            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> تصفية
+                        </button>
+                        <button class="bg-gray-200 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1 hover:bg-gray-300">
+                            <i data-lucide="settings" class="w-4 h-4"></i> إدارة المنشورات
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feed Post 1 -->
+                <div class="bg-white rounded-xl shadow card-shadow animate-fade">
+                    <!-- Post Header -->
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex gap-3">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50" class="w-10 h-10 rounded-full">
+                            <div>
+                                <h4 class="font-bold">أحمد محمد</h4>
+                                <div class="flex items-center gap-1 text-xs text-gray-500">
+                                    <span>منذ ساعتين</span> • <i data-lucide="globe" class="w-3 h-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="text-gray-500 hover:bg-gray-100 p-2 rounded-full">
+                            <i data-lucide="more-horizontal"></i>
+                        </button>
+                    </div>
+                    <!-- Post Body -->
+                    <div class="px-4 pb-3">
+                        <p class="text-lg">رحلة ممتعة اليوم في جبال طويق! الطبيعة هنا ساحرة جداً. ❤️⛰️</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800" class="w-full h-auto">
+                    <!-- Post Footer -->
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-1">
+                                <span class="bg-blue-500 rounded-full p-1"><i data-lucide="thumbs-up" class="w-3 h-3 text-white"></i></span>
+                                <span class="text-gray-500 text-sm">١٢٤</span>
+                            </div>
+                            <div class="text-gray-500 text-sm">
+                                <span>١٥ تعليقاً</span> • <span>٣ مشاركات</span>
+                            </div>
+                        </div>
+                        <hr class="mb-2">
+                        <div class="flex justify-around">
+                            <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition text-gray-600 font-bold">
+                                <i data-lucide="thumbs-up"></i> إعجاب
+                            </button>
+                            <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition text-gray-600 font-bold">
+                                <i data-lucide="message-square"></i> تعليق
+                            </button>
+                            <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition text-gray-600 font-bold">
+                                <i data-lucide="share-2"></i> مشاركة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed Post 2 -->
+                <div class="bg-white rounded-xl shadow card-shadow animate-fade" style="animation-delay: 0.1s;">
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex gap-3">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50" class="w-10 h-10 rounded-full">
+                            <div>
+                                <h4 class="font-bold">أحمد محمد</h4>
+                                <div class="flex items-center gap-1 text-xs text-gray-500">
+                                    <span>يوم أمس</span> • <i data-lucide="users" class="w-3 h-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="text-gray-500 hover:bg-gray-100 p-2 rounded-full">
+                            <i data-lucide="more-horizontal"></i>
+                        </button>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <p class="text-lg">الحمد لله، أتممت اليوم مشروع تطوير الواجهة البرمجية الجديدة لعميلي في ألمانيا. تجربة رائعة في العمل عن بُعد! 💻🔥</p>
+                    </div>
+                    <div class="p-4 border-t">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-1">
+                                <span class="bg-red-500 rounded-full p-1"><i data-lucide="heart" class="w-3 h-3 text-white"></i></span>
+                                <span class="text-gray-500 text-sm">٤٥٠</span>
+                            </div>
+                            <div class="text-gray-500 text-sm">
+                                <span>٤٢ تعليقاً</span>
+                            </div>
+                        </div>
+                        <hr class="mb-2">
+                        <div class="flex justify-around">
+                            <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition text-blue-600 font-bold">
+                                <i data-lucide="thumbs-up"></i> أعجبني
+                            </button>
+                            <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition text-gray-600 font-bold">
+                                <i data-lucide="message-square"></i> تعليق
+                            </button>
+                            <button class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg flex-1 justify-center transition text-gray-600 font-bold">
+                                <i data-lucide="share-2"></i> مشاركة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- UI Interaction Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Simple Tab Switcher Simulation
+        const tabs = document.querySelectorAll('.tab-item');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('text-blue-600', 'border-b-4', 'border-blue-600', 'rounded-none');
+                });
+                tab.classList.add('text-blue-600', 'border-b-4', 'border-blue-600', 'rounded-none');
+            });
+        });
+
+        // Sticky Logic for sidebar (Optional Enhancement)
+        window.addEventListener('scroll', () => {
+            const sidebar = document.querySelector('.sticky-sidebar');
+            if(sidebar) {
+                if (window.scrollY > 400) {
+                    sidebar.classList.add('fixed', 'top-16');
+                } else {
+                    sidebar.classList.remove('fixed', 'top-16');
+                }
+            }
+        });
+    </script>
+    
+    <!-- Core Application Scripts -->
+    <script src="js/utils/api-mock.js"></script>
+    <script src="js/core/app.js"></script>
+    <script src="js/modules/ui-controller.js"></script>
+</body>
+</html>
+```
